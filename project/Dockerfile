@@ -1,7 +1,7 @@
 FROM python:3.8
 
 # Copy requirements.txt
-COPY project/requirements.txt /app/
+COPY requirements.txt /app/
 
 # set a directory for the app
 WORKDIR /app

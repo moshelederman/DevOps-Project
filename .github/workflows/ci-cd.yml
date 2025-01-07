@@ -23,7 +23,6 @@ jobs:
 
       # Step 3: Build the Docker Image
       - name: Build Docker Image
-        working-directory: DevOps-Project/project
         run: |
           IMAGE_NAME=moshelederman/project-stars
           BUILD_NUMBER=${{ github.run_number }}

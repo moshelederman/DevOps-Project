@@ -19,7 +19,7 @@ jobs:
           pip install bandit
       - name: Run Bandit
         run: |
-          bandit -r DevOps-Project
+          bandit -r project
 
       # Step 2: Log in to Docker Hub
       - name: Log in to Docker Hub

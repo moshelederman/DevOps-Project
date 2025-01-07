@@ -21,7 +21,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-     
       # Step 3: Build the Docker Image
       - name: Build Docker Image
         run: |

@@ -41,15 +41,14 @@ jobs:
           echo "MYSQL_USER=${MYSQL_USER}" >> .env
           echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}" >> .env
 
-      - name: Navigate to project directory
-        run: cd project
+      - name: Navigate, stop existing containers, and start new ones
+        run: |
+          cd project
+          ls -la
+          docker-compose down -v || true
+          docker-compose up --build -d
 
-      - name: Bring down existing containers
-        run: docker-compose down -v || true
-
-      - name: Build and start containers
-        run: docker-compose up --build -d
-      
+        
 
       # Step 2: Log in to Docker Hub
       - name: Log in to Docker Hub

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Image Gallery</title>
+</head>
+<body>
+    <h1>Random Image Gallery</h1>
+    <p>Visitor Count: {{ visit_count }}</p>
+    {% if image_url %}
+        <img src="{{ image_url }}" alt="Random Image" style="max-width: 500px;">
+    {% else %}
+        <p>No image available.</p>
+    {% endif %}
+</body>
+</html>

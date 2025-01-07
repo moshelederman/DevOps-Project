@@ -60,6 +60,8 @@ jobs:
       # Step 3: Build the Docker Image
       - name: Build Docker Image
         run: |
+          cd project
+          ls -la
           IMAGE_NAME=moshelederman/project-stars
           BUILD_NUMBER=${{ github.run_number }}
           docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:0.0.$BUILD_NUMBER .
@@ -68,8 +70,6 @@ jobs:
       - name: Push Docker Image
         if: github.ref == 'refs/heads/main'
         run: |
-          cd project
-          ls -la
           IMAGE_NAME=moshelederman/project-stars
           BUILD_NUMBER=${{ github.run_number }}
           docker push $IMAGE_NAME:latest

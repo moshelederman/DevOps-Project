@@ -68,6 +68,8 @@ jobs:
       - name: Push Docker Image
         if: github.ref == 'refs/heads/main'
         run: |
+          cd project
+          ls -la
           IMAGE_NAME=moshelederman/project-stars
           BUILD_NUMBER=${{ github.run_number }}
           docker push $IMAGE_NAME:latest

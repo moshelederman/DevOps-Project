@@ -48,7 +48,7 @@ jobs:
           docker-compose down -v || true
           docker-compose up --build -d
          
-          for i in {1..5}; do
+          for i in {1..7}; do
             if curl -f http:/localhost:5000; then
               echo "Service is available."
               exit 0

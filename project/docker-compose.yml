@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
   app:
-    image: moshelederman/docker-gif-app
+    image: moshelederman/project-stars
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: docker-gif-app
+    container_name: project-stars
     ports:
       - 5000:5000
     depends_on:

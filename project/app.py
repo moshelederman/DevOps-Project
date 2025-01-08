@@ -4,6 +4,8 @@ import os
 import mysql.connector
 from dotenv import load_dotenv
 
+FLASK_DEBUG=1
+
 # טעינת משתני הסביבה מקובץ .env
 load_dotenv()
 

@@ -49,7 +49,7 @@ jobs:
           docker-compose up --build -d
          
           for i in {1..5}; do
-            if curl -f http://127.0.0.1:5000; then
+            if curl -f http:/localhost:5000; then
               echo "Service is available."
               exit 0
             else

@@ -47,10 +47,7 @@ jobs:
           ls -la
           docker-compose down -v || true
           docker-compose up --build -d
-          
-      - name: Wait for Service to be Available
-        id: wait_service
-        run: |
+         
           for i in {1..5}; do
             if curl -f http://127.0.0.1:5000; then
               echo "Service is available."

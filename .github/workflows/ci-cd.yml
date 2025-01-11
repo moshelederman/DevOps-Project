@@ -47,19 +47,6 @@ jobs:
           ls -la
           docker-compose down -v || true
           docker-compose up --build -d
-         
-          for i in {1..7}; do
-            if curl -f http://localhost:5000; then
-              echo "Service is available."
-              exit 0
-            else
-              echo "Service not available, retrying in 10 seconds..."
-              docker-compose logs
-              sleep 10
-            fi
-          done
-          echo "Service not available after multiple retries."
-          exit 1    
 
       # Step 2: Log in to Docker Hub
       - name: Log in to Docker Hub

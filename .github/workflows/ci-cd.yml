@@ -91,6 +91,12 @@ jobs:
           base: main
           title: "Merge ${{ github.ref_name }} to main"
           body: "This pull request merges branch `${{ github.ref_name }}` into the `main` branch."
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
+
           
       - name: Configure AWS CLI
         run: |
@@ -101,11 +107,11 @@ jobs:
       - name: Launch EC2 instance
         run: |
           INSTANCE_ID=$(aws ec2 run-instances \
-          --image-id ami-0abcdef1234567890 \ # שנה לפי ה-AMI המתאים
-          --instance-type t2.micro \        # סוג המכונה
-          --key-name my-key-pair \         # מפתח SSH שנוצר מראש
-          --security-group-ids sg-0123456789abcdef0 \ # קבוצת אבטחה
-          --subnet-id subnet-0123456789abcdef0 \      # Subnet מתאים
+          --image-id ami-0abcdef1234567890 \ \
+          --instance-type t2.micro \       
+          --key-name my-key-pair \        
+          --security-group-ids sg-0123456789abcdef0 \
+          --subnet-id subnet-0123456789abcdef0 \      
           --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=GitHubActionEC2}]' \
           --query 'Instances[0].InstanceId' \
           --output text)

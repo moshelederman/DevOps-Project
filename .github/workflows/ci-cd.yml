@@ -91,3 +91,46 @@ jobs:
           base: main
           title: "Merge ${{ github.ref_name }} to main"
           body: "This pull request merges branch `${{ github.ref_name }}` into the `main` branch."
+          
+      - name: Configure AWS CLI
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region ${{ secrets.AWS_REGION }}
+          
+      - name: Launch EC2 instance
+        run: |
+          INSTANCE_ID=$(aws ec2 run-instances \
+          --image-id ami-0abcdef1234567890 \ # שנה לפי ה-AMI המתאים
+          --instance-type t2.micro \        # סוג המכונה
+          --key-name my-key-pair \         # מפתח SSH שנוצר מראש
+          --security-group-ids sg-0123456789abcdef0 \ # קבוצת אבטחה
+          --subnet-id subnet-0123456789abcdef0 \      # Subnet מתאים
+          --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=GitHubActionEC2}]' \
+          --query 'Instances[0].InstanceId' \
+          --output text)
+          echo "Launched instance with ID: $INSTANCE_ID"
+          echo "INSTANCE_ID=$INSTANCE_ID" >> $GITHUB_ENV
+          
+      - name: Wait for EC2 to be ready
+        run: |
+          aws ec2 wait instance-status-ok --instance-ids ${{ env.INSTANCE_ID }}
+          
+      - name: Get EC2 Public IP
+        run: |
+          PUBLIC_IP=$(aws ec2 describe-instances \
+          --instance-ids ${{ env.INSTANCE_ID }} \
+          --query 'Reservations[0].Instances[0].PublicIpAddress' \
+          --output text)
+          echo "EC2 instance public IP: $PUBLIC_IP"
+          echo "PUBLIC_IP=$PUBLIC_IP" >> $GITHUB_ENV
+          
+      - name: Output EC2 details
+        run: |
+         echo "Instance ID: ${{ env.INSTANCE_ID }}"
+         echo "Public IP: ${{ env.PUBLIC_IP }}"       
+          
+              
+     
+             
+             

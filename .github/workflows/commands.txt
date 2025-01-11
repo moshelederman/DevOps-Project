@@ -1,0 +1,12 @@
+ for i in {1..7}; do
+            if curl -f http://localhost:5000; then
+              echo "Service is available."
+              exit 0
+            else
+              echo "Service not available, retrying in 10 seconds..."
+              docker-compose logs
+              sleep 10
+            fi
+          done
+          echo "Service not available after multiple retries."
+          exit 1  

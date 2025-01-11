@@ -73,31 +73,11 @@ jobs:
           docker push $IMAGE_NAME:latest
           docker push $IMAGE_NAME:0.0.$BUILD_NUMBER
 
-  create-pr:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main'
-
-    steps:
-      # Step 1: Check out the code
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      # Step 2: Create a Pull Request to main
-      - name: Create Pull Request to Main
-        uses: peter-evans/create-pull-request@v5
-        with:
-          branch: ${{ github.ref_name }}
-          base: main
-          title: "Merge ${{ github.ref_name }} to main"
-          body: "This pull request merges branch `${{ github.ref_name }}` into the `main` branch."
-
       - name: Install AWS CLI
         run: |
           sudo apt-get update
           sudo apt-get install -y awscli
 
-          
       - name: Configure AWS CLI
         run: |
           aws configure set aws_access_key_id ${{ secrets.ACCESS_KEY }}
@@ -134,7 +114,28 @@ jobs:
       - name: Output EC2 details
         run: |
          echo "Instance ID: ${{ env.INSTANCE_ID }}"
-         echo "Public IP: ${{ env.PUBLIC_IP }}"       
+         echo "Public IP: ${{ env.PUBLIC_IP }}"         
+
+  create-pr:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Create a Pull Request to main
+      - name: Create Pull Request to Main
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: ${{ github.ref_name }}
+          base: main
+          title: "Merge ${{ github.ref_name }} to main"
+          body: "This pull request merges branch `${{ github.ref_name }}` into the `main` branch."
+
+        
           
               
      

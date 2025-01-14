@@ -106,8 +106,8 @@ jobs:
             --image-id ami-05576a079321f21f8 \
             --instance-type t2.micro \
             --key-name my-key-pair \
-            --security-group-ids sg-0123456789abcdef0 \
-            --subnet-id subnet-0123456789abcdef0 \
+            --security-group-ids sg-06b04d46e3ce50a91 \
+            --subnet-id subnet-0c3628dbc4e1aae55 \
             --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=GitHubActionEC2}]' \
             --query 'Instances[0].InstanceId' \
             --output text)

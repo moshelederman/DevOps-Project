@@ -93,6 +93,7 @@ jobs:
 
       - name: Decode and save key pair
         run: |
+          mkdir -p ~/.ssh
           echo "$MY_KEY_PAIR" | base64 --decode > ~/.ssh/my-key-pair.pem
           chmod 400 ~/.ssh/my-key-pair.pem
         env:

@@ -105,7 +105,7 @@ jobs:
           INSTANCE_ID=$(aws ec2 run-instances \
             --image-id ami-05576a079321f21f8 \
             --instance-type t2.micro \
-            --key-name my-key-pair \
+            --key-name ${{ secrets.MY_KEY_PAIR }} \
             --security-group-ids sg-06b04d46e3ce50a91 \
             --subnet-id subnet-0c3628dbc4e1aae55 \
             --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=GitHubActionEC2}]' \

@@ -90,6 +90,14 @@ jobs:
           aws configure set aws_access_key_id ${{ secrets.ACCESS_KEY }}
           aws configure set aws_secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
           aws configure set default.region ${{ secrets.AWS_REGION }}
+
+      - name: Decode and save key pair
+        run: |
+          echo "$MY_KEY_PAIR" | base64 --decode > ~/.ssh/my-key-pair.pem
+          chmod 400 ~/.ssh/my-key-pair.pem
+        env:
+          MY_KEY_PAIR: ${{ secrets.MY_KEY_PAIR }}
+          
           
       - name: Launch EC2 instance
         run: |

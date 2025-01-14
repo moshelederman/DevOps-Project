@@ -95,15 +95,18 @@ jobs:
         run: |
           INSTANCE_ID=$(aws ec2 run-instances \
             --image-id ami-05576a079321f21f8 \
-            --instance-type t2.micro \       
-            --key-name my-key-pair \        
+            --instance-type t2.micro \
+            --key-name my-key-pair \
             --security-group-ids sg-0123456789abcdef0 \
-            --subnet-id subnet-0123456789abcdef0 \      
+            --subnet-id subnet-0123456789abcdef0 \
             --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=GitHubActionEC2}]' \
             --query 'Instances[0].InstanceId' \
             --output text)
+        
           echo "Launched instance with ID: $INSTANCE_ID"
           echo "INSTANCE_ID=$INSTANCE_ID" >> $GITHUB_ENV
+
+          
           
       - name: Wait for EC2 to be ready
         run: |

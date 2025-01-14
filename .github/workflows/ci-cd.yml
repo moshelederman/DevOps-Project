@@ -94,8 +94,8 @@ jobs:
       - name: Decode and save key pair
         run: |
           mkdir -p ~/.ssh
-          echo "$MY_KEY_PAIR" | base64 --decode > ~/.ssh/my-key-pair.pem
-          chmod 400 ~/.ssh/my-key-pair.pem
+          echo "$MY_KEY_PAIR" | base64 --decode > ~/.ssh/moshe-key.pem
+          chmod 400 ~/.ssh/moshe-key.pem
         env:
           MY_KEY_PAIR: ${{ secrets.MY_KEY_PAIR }}
           
@@ -105,7 +105,7 @@ jobs:
           INSTANCE_ID=$(aws ec2 run-instances \
             --image-id ami-05576a079321f21f8 \
             --instance-type t2.micro \
-            --key-name ${{ secrets.MY_KEY_PAIR }} \
+            --key-name moshe-key \
             --security-group-ids sg-06b04d46e3ce50a91 \
             --subnet-id subnet-0c3628dbc4e1aae55 \
             --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=GitHubActionEC2}]' \

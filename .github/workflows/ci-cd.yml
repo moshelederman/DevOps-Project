@@ -115,8 +115,7 @@ jobs:
           echo "Launched instance with ID: $INSTANCE_ID"
           echo "INSTANCE_ID=$INSTANCE_ID" >> $GITHUB_ENV
 
-          
-          
+                    
       - name: Wait for EC2 to be ready
         run: |
           aws ec2 wait instance-status-ok --instance-ids ${{ env.INSTANCE_ID }}
@@ -133,7 +132,40 @@ jobs:
       - name: Output EC2 details
         run: |
          echo "Instance ID: ${{ env.INSTANCE_ID }}"
-         echo "Public IP: ${{ env.PUBLIC_IP }}"         
+         echo "Public IP: ${{ env.PUBLIC_IP }}" 
+       
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.MY_KEY_PAIR }}
+  
+      - name: Deploy application to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@${{ env.INSTANCE_ID }} << EOF
+            scp -i moshe-lederman.pem docker-compose.yml ec2-user@${{ env.INSTANCE_ID }}:/home/ec2-user/
+            sudo yum update -y
+            sudo yum install docker -y
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            sudo usermod -aG docker ec2-user
+            sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            docker --version
+            docker-compose --version
+
+
+            # Move to the application folder
+            cd /home/ec2-user/
+            
+            # Pull the latest changes (if needed)
+            git pull origin main
+  
+            # Run Docker Compose
+          
+            docker-compose up -d
+            docker ps
+
+          EOF   
 
   create-pr:
     needs: build

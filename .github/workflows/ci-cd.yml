@@ -137,7 +137,8 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.MY_KEY_PAIR }}
+          ssh-private-key: |
+            ${{ secrets.MY_KEY_PAIR }}
   
       - name: Deploy application to EC2
         run: |

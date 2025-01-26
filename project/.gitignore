@@ -1,1 +1,17 @@
 .env
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+*.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+.terraformrc.json
+.env
+.gitignore
+.project/.gitignore
+.lock.hcl
+.terraform.ock.hcl

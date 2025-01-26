@@ -15,3 +15,4 @@ override.tf.json
 .project/.gitignore
 .lock.hcl
 .terraform.ock.hcl
+project/.terraform.lock.hcl

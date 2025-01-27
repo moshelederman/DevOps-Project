@@ -133,8 +133,8 @@ jobs:
   
       - name: Deploy application to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ env.INSTANCE_ID }} << EOF
-            scp -i moshe-lederman.pem docker-compose.yml ec2-user@${{ env.INSTANCE_ID }}:/home/ec2-user/
+          scp -i moshe-lederman.pem docker-compose.yml ec2-user@${{ env.PUBLIC_IP }}:/home/ec2-user/
+          ssh -o StrictHostKeyChecking=no ec2-user@${{ env.PUBLIC_IP }} << EOF
             sudo yum update -y
             sudo yum install docker -y
             sudo systemctl start docker

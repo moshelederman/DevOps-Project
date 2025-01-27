@@ -133,27 +133,26 @@ jobs:
   
       - name: Deploy application to EC2
         run: |
-          scp -i moshe-lederman.pem docker-compose.yml ec2-user@${{ env.PUBLIC_IP }}:/home/ec2-user/
           ssh -o StrictHostKeyChecking=no ec2-user@${{ env.PUBLIC_IP }} << EOF
             sudo yum update -y
             sudo yum install docker -y
+            sudo yum install -y git
             sudo systemctl start docker
             sudo systemctl enable docker
             sudo usermod -aG docker ec2-user
+            newgrp docker
             sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
             docker --version
             docker-compose --version
 
-
             # Move to the application folder
             cd /home/ec2-user/
+            git clone https://github.com/moshelederman/DevOps-Project.git
             
-            # Pull the latest changes (if needed)
-            git pull origin main
-  
             # Run Docker Compose
-          
+            cd /home/ec2-user/DevOps-Project
+            cd project
             docker-compose up -d
             docker ps
 

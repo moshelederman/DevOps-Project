@@ -94,7 +94,7 @@ jobs:
       - name: Launch EC2 instance
         run: |
           INSTANCE_ID=$(aws ec2 run-instances \
-            --image-id ami-05576a079321f21f8 \
+            --image-id ami-0ac4dfaf1c5c0cce9 \
             --instance-type t2.micro \
             --key-name moshe-key \
             --security-group-ids sg-06b04d46e3ce50a91 \
@@ -133,7 +133,7 @@ jobs:
   
       - name: Deploy application to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ env.PUBLIC_IP }} << EOF
+          ssh -v -o StrictHostKeyChecking=no ec2-user@${{ env.PUBLIC_IP }} << EOF
             sudo yum update -y
             sudo yum install docker -y
             sudo yum install -y git
@@ -145,11 +145,9 @@ jobs:
             sudo chmod +x /usr/local/bin/docker-compose
             docker --version
             docker-compose --version
-
             # Move to the application folder
             cd /home/ec2-user/
             git clone https://github.com/moshelederman/DevOps-Project.git
-            
             # Run Docker Compose
             cd /home/ec2-user/DevOps-Project
             cd project

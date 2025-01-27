@@ -35,11 +35,13 @@ jobs:
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
         run: |
           echo "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}" >> $GITHUB_ENV
           echo "MYSQL_DATABASE=${MYSQL_DATABASE}" >> $GITHUB_ENV
           echo "MYSQL_USER=${MYSQL_USER}" >> $GITHUB_ENV
           echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}" >> $GITHUB_ENV
+          echo "MYSQL_HOST=${MYSQL_HOST}" >> $GITHUB_ENV
 
       - name: Navigate, stop existing containers, and start new ones
         run: |
@@ -151,6 +153,11 @@ jobs:
             # Run Docker Compose
             cd /home/ec2-user/DevOps-Project
             cd project
+            echo "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}" >> .env
+            echo "MYSQL_DATABASE=${MYSQL_DATABASE}" >> .env
+            echo "MYSQL_USER=${MYSQL_USER}" >> .env
+            echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}" >> .env
+            echo "MYSQL_HOST=${MYSQL_HOST}" >> .env
             docker-compose up -d
             docker ps
           EOF 

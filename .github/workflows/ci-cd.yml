@@ -155,7 +155,6 @@ jobs:
             cd project
             docker-compose up -d
             docker ps
-
           EOF   
 
   create-pr:

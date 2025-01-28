@@ -161,7 +161,7 @@ jobs:
             echo "MYSQL_HOST=${MYSQL_HOST}" >> .env
             docker-compose up --build -d
             docker ps
-          EOF 
+          EOF
   
 
   create-pr:

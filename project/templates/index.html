@@ -4,14 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Image Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .image-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Random Image Gallery</h1>
-    <p>Visitor Count: {{ visit_count }}</p>
-    {% if image_url %}
-        <img src="{{ image_url }}" alt="Random Image" style="max-width: 500px;">
-    {% else %}
-        <p>No image available.</p>
-    {% endif %}
+    <div class="container">
+        <h1>Random Image Gallery</h1>
+        <p>Visitor Count: {{ visit_count }}</p>
+        <div class="image-container">
+            {% if image_url %}
+                <img src="{{ image_url }}" alt="Random Image">
+            {% else %}
+                <p>No image available.</p>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>

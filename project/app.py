@@ -1,4 +1,3 @@
-#app project
 from flask import Flask, render_template, jsonify
 import os
 import mysql.connector
@@ -6,12 +5,10 @@ from dotenv import load_dotenv
 
 FLASK_DEBUG=1
 
-# טעינת משתני הסביבה מקובץ .env
 load_dotenv()
 
 app = Flask(__name__)
 
-# קריאת משתני הסביבה
 db_config = {
     'host': os.getenv('MYSQL_HOST'),
     'user': os.getenv('MYSQL_USER'),

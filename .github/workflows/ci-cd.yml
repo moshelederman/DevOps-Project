@@ -148,35 +148,34 @@ jobs:
             cd /home/ec2-user/
             git clone https://github.com/moshelederman/DevOps-Project.git
             # Run Docker Compose
-            cd /home/ec2-user/DevOps-Project
-            cd project
+            cd /home/ec2-user/DevOps-Project/project
             echo "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}" >> .env
             echo "MYSQL_DATABASE=${MYSQL_DATABASE}" >> .env
             echo "MYSQL_USER=${MYSQL_USER}" >> .env
             echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}" >> .env
             echo "MYSQL_HOST=${MYSQL_HOST}" >> .env
             sudo docker-compose pull
-            sudo docker-compose up --build -d
+            sudo docker-compose up -d --no-build
             sudo docker ps
           EOF
   
 
-  create-pr:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main'
+  # create-pr:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   if: github.ref != 'refs/heads/main'
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v3
 
-      - name: Create Pull Request to Main
-        uses: peter-evans/create-pull-request@v5
-        with:
-          branch: ${{ github.ref_name }}
-          base: main
-          title: "Merge ${{ github.ref_name }} to main"
-          body: "This pull request merges branch `${{ github.ref_name }}` into the `main` branch."
+  #     - name: Create Pull Request to Main
+  #       uses: peter-evans/create-pull-request@v5
+  #       with:
+  #         branch: ${{ github.ref_name }}
+  #         base: main
+  #         title: "Merge ${{ github.ref_name }} to main"
+  #         body: "This pull request merges branch `${{ github.ref_name }}` into the `main` branch."
 
         
           

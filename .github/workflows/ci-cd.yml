@@ -159,7 +159,8 @@ jobs:
             echo "MYSQL_USER=${MYSQL_USER}" >> .env
             echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}" >> .env
             echo "MYSQL_HOST=${MYSQL_HOST}" >> .env
-            docker-compose up --build -d
+            docker-compose pull
+            docker-compose up --no-build -d
             docker ps
           EOF
   
